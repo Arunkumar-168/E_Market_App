@@ -1,15 +1,42 @@
+import 'package:e_market/Common_API/Route_Page.dart';
 import 'package:e_market/Controller/Fruit_Controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Fruit List')),
+      drawer: Drawer(
+        child: ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 60),
+          children: [
+            ListTile(
+              leading: const Icon(Icons.logout, color: Colors.pink),
+              title: const Text(
+                'Logout',
+                style: TextStyle(color: Colors.black),
+              ),
+              onTap: () {
+                Get.toNamed(RouteHelper.getLoginRoute());
+              },
+            ),
+          ],
+        ),
+      ),
+
       body: Padding(
         padding: const EdgeInsets.all(15),
         child: GetBuilder<FruitController>(

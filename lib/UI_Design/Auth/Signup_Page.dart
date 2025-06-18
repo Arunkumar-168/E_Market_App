@@ -1,4 +1,6 @@
+import 'package:e_market/Controller/Auth_Controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -8,52 +10,62 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Text(
-            'Signup Page',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Username',
+  final _formKey = GlobalKey<FormState>();
+
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(title: const Text('Login')),
+    body: Padding(
+      padding: const EdgeInsets.all(16),
+      child: GetBuilder<AuthController>(
+        builder: (controller) {
+          return Form(
+              key: _formKey,
+              child: Column(
+            children: [
+              TextFormField(
+                controller: controller. firstNameController,
+                decoration: const InputDecoration(labelText: 'First Name'),
+                validator: (val) => val!.isEmpty ? 'Required' : null,
               ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Email',
+              TextFormField(
+                controller: controller. lastNameController,
+                decoration: const InputDecoration(labelText: 'Last Name'),
+                validator: (val) => val!.isEmpty ? 'Required' : null,
               ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: TextField(
-              obscureText: true,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Password',
+              TextFormField(
+                controller: controller. emailController,
+                decoration: const InputDecoration(labelText: 'Email'),
+                validator: (val) => val!.isEmpty ? 'Required' : null,
               ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: ElevatedButton(
-              onPressed: () {},
-              child: Text('Signup'),
-            ),
-          ),
-        ],
+              TextFormField(
+                controller: controller. passwordController,
+                decoration: const InputDecoration(labelText: 'Password'),
+                obscureText: true,
+                validator: (val) => val!.isEmpty ? 'Required' : null,
+              ),
+              TextFormField(
+                controller: controller. confirmPasswordController,
+                decoration: const InputDecoration(labelText: 'Confirm Password'),
+                obscureText: true,
+                validator: (val) => val!.isEmpty ? 'Required' : null,
+              ),
+              TextFormField(
+                controller: controller. addressController,
+                decoration: const InputDecoration(labelText: 'Address'),
+                validator: (val) => val!.isEmpty ? 'Required' : null,
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: controller.signup,
+                child: const Text('Sign Up'),
+              ),
+            ],
+          ));
+        },
       ),
-    );
-  }
+    ),
+  );
+}
 }
